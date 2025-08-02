@@ -1,11 +1,12 @@
-# Start with the official n8n image
+# Start with the official n8n image (which uses Alpine Linux)
 FROM n8nio/n8n
 
 # Switch to the root user to install software
 USER root
 
-# Update and install FFmpeg, then clean up
-RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
+# Use Alpine's 'apk' package manager to add ffmpeg
+# '--no-cache' is the standard practice for keeping images small
+RUN apk add --no-cache ffmpeg
 
 # Switch back to the default non-root user for security
 USER node
